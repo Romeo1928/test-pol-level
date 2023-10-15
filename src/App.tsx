@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import './App.css';
 import b from './components/SuperButton/SuperButton.module.css'
 import {Question} from "./components/Question/Question";
@@ -730,6 +730,24 @@ function App() {
 
 	// const [showResult, setShowResult] = useState(false);
 
+	useEffect(() => {
+		// Получаем сохраненные ответы из localStorage
+		const savedAnswers = localStorage.getItem('answers');
+		if (savedAnswers) {
+			setAnswers(JSON.parse(savedAnswers));
+		}
+	}, []);
+
+	useEffect(() => {
+		// Сохраняем ответы в localStorage при их изменении
+		localStorage.setItem('answers', JSON.stringify(answers));
+	}, [answers]);
+
+	const resetTest = () => {
+		setAnswers(Array(questions.length).fill(''));
+		localStorage.removeItem('answers');
+	};
+
 	const handleAnswerChange = (questionId: number, selectedOption: string) => {
 		setAnswers((prevAnswers) => {
 			const updatedAnswers = [...prevAnswers];
@@ -847,6 +865,7 @@ function App() {
 			{/*	// onClick={() => setShowText(true)}*/}
 			{/*>SHOW RESULTS TEST*/}
 			{/*</button>*/}
+			<SuperButton className={b.customButtonReset} name={'RESTART TEST'} callBack={resetTest}/>
 			<div className="resultBody">
 				<Klucz/>
 			</div>
@@ -856,9 +875,3 @@ function App() {
 
 
 export default App;
-
-
-
-
-
-
