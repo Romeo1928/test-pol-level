@@ -51,7 +51,7 @@ export const Question = (props: QuestionPropsType) => {
 					<li key={index}
 						 className={colorAnswerStyle}
 					>
-						<label>
+						<label className={s.label}>
 							<SuperInput isSelected={isSelected} callBack={()=>handleChange(el)}/>
 							{/*<input*/}
 							{/*	type="checkbox"*/}
