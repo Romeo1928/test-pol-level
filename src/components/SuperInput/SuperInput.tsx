@@ -1,4 +1,5 @@
 import React, {ChangeEvent} from 'react';
+import s from './SuperInput.module.css'
 
 type SuperInputPropsType = {
 	isSelected: boolean,
@@ -13,6 +14,7 @@ export const SuperInput = (props: SuperInputPropsType) => {
 
 	return (
 		<input
+			className={s.input}
 			type="checkbox"
 			checked={props.isSelected}
 			onChange={onChangeInputHandler}
