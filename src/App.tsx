@@ -819,7 +819,7 @@ function App() {
 			{/*<button className="button"*/}
 			{/*		  onClick={onClickHandler}>↑ DESCRIPTION TEST ↓</button>*/}
 			{showTextState.showText &&
-				<h3>
+				<h3 className="descriptionTest">
 					Решите тест. Выберите правильный ответ: a, b или c, а в вопросах/предложениях 65, 74, 75, 76, 77, 78,
 					85, 86, 96, 100 составьте правильную форму, заполнив пробел. Проверьте свои ответы по ключу, приведенному
 					под тестом. За каждый правильно указанный ответ засчитывается 1 балл. Сложите все баллы, просуммируйте
@@ -857,89 +857,7 @@ function App() {
 
 export default App;
 
-// 1. Jak się Pan nazywa?
-//    a) Pan nazywa się Kowalski.
-//    b) Nazywa się Kowalski.
-//    c) Nazywam się Kowalski.
-//		Ответ: c)
-//
-// 2. To jest Anna.
-//    a) Co to jest?
-//    b) Kto to jest?
-//    c) Kto ona jest?
-//		Ответ: b)
-//
-// 3. Piotr i Andrzej ............... z Polski.
-//    a) są
-// 	b) jest
-// 	c) jesteśmy
-//		Ответ: a)
-//
-// 4. Mój ojciec jest ..................... .
-// 	a) dobry dentysta
-// 	b) dobrym dentystą
-// 	c) dobrą dentystką
-//		Ответ: b)
-//
-// 5. Do pracy jadę ..................... .
-// 	a) z autobusem
-// 	b) autobusem
-// 	c) na autobusie
-//		Ответ: b)
-//
-// 6. Nie umiem ......................... na nartach.
-//    a) jeżdżę
-// 	b) jeździć
-// 	c) jechać
-//		Ответ: b)
-//
-// 7. Lubię ...................................... .
-// 	a) mojego komputera
-//	 	b) mój komputer
-// 	c) moim komputerem
-//		Ответ: b)
-//
-// 8. Proszę kawę bez ............................ .
-// 	a) cukier
-//	 	b) cukrem
-// 	c) cukru
-//		Ответ: c)
-//
-// 9. Osiemnaście plus dwieście piętnaście to ....................... .
-// 	a) trzydzieści trzy
-// 	b) dwieście trzydzieści trzy
-//		c) dwieście trzynaście
-//		Ответ: b)
-//
-// 10. Lekcja zaczyna się o ................. (19:20)
-//		a) dziesiątej dwadzieścia.
-//   	b) dziewiątej dwadzieścia. 1
-// 	c) dziewiętnastej dwadzieścia.
-//		Ответ: c)
-//
-// 11. Często jemy w barach mlecznych, ale oni ..................... w restauracji.
-//    a) jem
-// 	b) jemy
-// 	c) jedzą
-//		Ответ: c)
-//
-// 12. Wczoraj (my) .................... dziesięć godzin.
-//   	a) pracowali
-// 	b) pracowaliśmy
-// 	c) pracowały
-//		Ответ: b)
-//
-// 13. Jutro Ania i Piotr ......................... egzamin.
-//    a) będą zdawać
-// 	b) będziecie zdawać
-// 	c) będą zdawały
-//		Ответ: a)
-//
-// 14. Teraz mieszkam w ............................ .
-// 	a) Polsce
-//	 	b) Polska
-//	 	c) Polski
-//		Ответ: a)
+
 
 
 
