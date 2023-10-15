@@ -2,6 +2,7 @@
 	height: 100vh; /* Необходимо для вертикального центрирования */
 	max-width: 900px;
 	margin: 0 auto;
+	padding: 0 10px 0 10px;
 }
 
 h1 {
