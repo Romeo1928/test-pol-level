@@ -732,13 +732,6 @@ function App() {
 	// const [showResult, setShowResult] = useState(false);
 
 
-	// set to localStorage
-	useEffect(() => {
-		// Сохраняем ответы в localStorage при их изменении
-		localStorage.setItem('answers', JSON.stringify(answers));
-	}, [answers]);
-	// console.log(JSON.stringify(answers))
-
 	// get/получаем from localStorage
 	useEffect(() => {
 		// Получаем сохраненные ответы из localStorage
@@ -748,6 +741,13 @@ function App() {
 			setAnswers(JSON.parse(savedAnswers));
 		}
 	}, []);
+
+	// set to localStorage
+	useEffect(() => {
+		// Сохраняем ответы в localStorage при их изменении
+		localStorage.setItem('answers', JSON.stringify(answers));
+	}, [answers]);
+	// console.log(JSON.stringify(answers))
 
 	// removeItem from localStorage по ключу
 	const resetTest = () => {
