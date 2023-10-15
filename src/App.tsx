@@ -540,21 +540,21 @@ const questions: QuestionType[] = [
 	{
 		id: 76,
 		question: "Jeśli będzie deszcz, schronimy się w jakiejś najbliższej kawiarni.\nW razie………………………………………………………………………………………………………….... .",
-		options: ["a) potrzeby", "b) konieczności", "c) niebezpieczeństwa"],
-		correctAnswer: "b) konieczności",
+		options: ["a) deszczem", "b) deszczu", "c) deszcza"],
+		correctAnswer: "b) deszczu ",
 		points: 1
 	},
 	{
 		id: 77,
 		question: "Powiedział, że boli go głowa i wyszedł z biura.\nPod pozorem ……………………………………………………………………………………………………… .",
-		options: ["a) spotkania", "b) wizyty", "c) sprawy"],
-		correctAnswer: "c) sprawy",
+		options: ["a) bólu głowa", "b) bólem głowy", "c) bólu głowy"],
+		correctAnswer: "c) bólu głowy",
 		points: 1
 	},
 	{
 		id: 78,
 		question: "Chociaż jesteście różnej płci, macie takie same prawa.\nBez względu na …………………………………………………………………………………………………. .",
-		options: ["a) płeć", "b) przyczynę", "c) okoliczność"],
+		options: ["a) płeć", "b) płec", "c) płećy"],
 		correctAnswer: "a) płeć",
 		points: 1
 	},
@@ -603,7 +603,7 @@ const questions: QuestionType[] = [
 	{
 		id: 85,
 		question: "Wygrał ten konkurs, ponieważ wiele wiedział. = Dzięki ……………………………………………………….. .",
-		options: ["a) swojej wiedzy", "b) swoim umiejętnościom", "c) swojemu talentowi"],
+		options: ["a) swojej wiedzy", "b) swojej wiedzom", "c) swojej wiedze"],
 		correctAnswer: "a) swojej wiedzy",
 		points: 1
 	},
@@ -679,9 +679,9 @@ const questions: QuestionType[] = [
 	},
 	{
 		id: 96,
-		question: "Nie dasz sobie rady za granicą, jeśli nie będziesz znał języka. Bez …………………………………………………………………………………………………………………………… .",
-		options: ["a) wątpienia", "b) pytania", "c) wątpliwości"],
-		correctAnswer: "c) wątpliwości",
+		question: "Nie dasz sobie rady za granicą, jeśli nie będziesz znał języka. Bez ……………języka nie dasz sobie rady za granicą.",
+		options: ["a) wątpienia", "b) pytania", "c) znajomości"],
+		correctAnswer: "c) znajomości",
 		points: 1
 	},
 	{
@@ -723,6 +723,7 @@ function App() {
 	// 3. `const [answers, setAnswers] = useState<string[]>(...)`: Массив с двумя элементами, возвращаемый хуком `useState`, разделяется на две переменные - `answers` и `setAnswers`. `answers` представляет текущее значение состояния, а `setAnswers` - функцию, которую мы будем использовать для обновления значения состояния `answers`.
 	// Таким образом, данная запись создает состояние `answers` и функцию `setAnswers` с начальным значением, представляющим массив пустых строк. Вы можете использовать `answers` для доступа к текущему значению состояния и `setAnswers` для обновления этого значения.
 
+
 	const [showTextState, setShowTextState] = useState({
 		showResult: false,
 		showText: false,
@@ -730,20 +731,25 @@ function App() {
 
 	// const [showResult, setShowResult] = useState(false);
 
+
+	// set to localStorage
+	useEffect(() => {
+		// Сохраняем ответы в localStorage при их изменении
+		localStorage.setItem('answers', JSON.stringify(answers));
+	}, [answers]);
+	// console.log(JSON.stringify(answers))
+
+	// get/получаем from localStorage
 	useEffect(() => {
 		// Получаем сохраненные ответы из localStorage
 		const savedAnswers = localStorage.getItem('answers');
+		// проверка на null
 		if (savedAnswers) {
 			setAnswers(JSON.parse(savedAnswers));
 		}
 	}, []);
 
-	useEffect(() => {
-		// Сохраняем ответы в localStorage при их изменении
-		localStorage.setItem('answers', JSON.stringify(answers));
-	}, [answers]);
-
-	// restart test
+	// removeItem from localStorage по ключу
 	const resetTest = () => {
 		setAnswers(Array(questions.length).fill(''));
 		localStorage.removeItem('answers');
