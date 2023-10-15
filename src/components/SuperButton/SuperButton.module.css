@@ -12,7 +12,7 @@
 
 .customButtonKlucz {
 	margin-bottom: 20px;
-	background: darkseagreen;
+	background: lightsteelblue;
 }
 
 .customButtonText {
@@ -20,12 +20,12 @@
 }
 
 .customButtonReset {
-	background: lightsteelblue;
+	background: green;
 	margin-bottom: 20px;
 }
 
 .customButtonResult {
-	background: lightsteelblue;
+	background: darkseagreen;
 	margin-bottom: 20px;
 }
 
