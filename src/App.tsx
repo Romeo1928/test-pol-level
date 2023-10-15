@@ -743,9 +743,14 @@ function App() {
 		localStorage.setItem('answers', JSON.stringify(answers));
 	}, [answers]);
 
+	// restart test
 	const resetTest = () => {
 		setAnswers(Array(questions.length).fill(''));
 		localStorage.removeItem('answers');
+		setShowTextState({
+			showResult: false,
+			showText: false,
+		});
 	};
 
 	const handleAnswerChange = (questionId: number, selectedOption: string) => {
