@@ -1,9 +1,13 @@
-import React, {useState} from 'react';
+import React, {useReducer, useState} from 'react';
 import './App.css';
 import b from './components/SuperButton/SuperButton.module.css'
 import {Question} from "./components/Question/Question";
 import Klucz from "./components/Klucz/Klucz";
 import {SuperButton} from "./components/SuperButton/SuperButton";
+import {questionsReducer, setAnswerAC} from "./state/questions-reducer";
+import {showTextReducer, toggleShowResultAC, toggleShowTextAC} from "./state/showText-reducer";
+import {useDispatch, useSelector} from "react-redux";
+import {AppRootStateType} from "./state/store";
 
 
 export type QuestionType = {
@@ -14,7 +18,8 @@ export type QuestionType = {
 	points: number;
 };
 
-const questions: QuestionType[] = [
+
+const questions = [
 	{
 		id: 1,
 		question: 'Jak się Pan nazywa?',
@@ -714,28 +719,71 @@ const questions: QuestionType[] = [
 	}
 ];
 
+export type initialStateType = {
+	answers: string[];
+}
+
+
+const initialAnswerState = Array(questions.length).fill('');
+export const initialState: initialStateType = {
+	answers: initialAnswerState,
+};
+
+export type initialShowTextStateType = {
+	showResult: boolean;
+	showText: boolean;
+}
+
+export const initialShowTextState = {
+	showResult: false,
+	showText: false,
+};
 
 function App() {
-	const [answers, setAnswers] = useState<string[]>(Array(questions.length).fill(''));
+	// redux
+	const questionsState = useSelector<AppRootStateType, initialStateType>((state) => state.questions);
+	const showTextState = useSelector<AppRootStateType, typeof initialShowTextState >((state) => state.showText);
+	// Здесь мы используем typeof initialShowTextState в качестве типа для useSelector, чтобы указать, что тип состояния showText соответствует типу initialShowTextState.
+	const dispatch = useDispatch();
+
+	// useReducer()
+	// const [questionsState, dispatchToQuestions] = useReducer(
+	// 	questionsReducer,
+	// 	initialState
+	// );
+	//
+	// const [showTextState, dispatchToShowText] = useReducer(
+	// 	showTextReducer,
+	// 	initialShowTextState
+	// );
+
+	// useState()
+	// const [answers, setAnswers] = useState<string[]>(Array(questions.length).fill(''));
 	// Разберем эту запись по шагам:
 	// 1. `useState<string[]>(...)`: Хук `useState` принимает начальное значение состояния в качестве аргумента и возвращает массив с двумя элементами. Первый элемент массива - текущее значение состояния (`answers`), а второй элемент - функция (`setAnswers`), используемая для обновления значения состояния.
 	// 2. `Array(questions.length).fill('')`: Здесь мы создаем новый массив с длиной, равной длине массива `questions`. Метод `fill('')` заполняет каждый элемент этого массива пустой строкой `''`. Таким образом, мы создаем новый массив, содержащий пустые строки, который будет использоваться в качестве начального значения состояния `answers`.
 	// 3. `const [answers, setAnswers] = useState<string[]>(...)`: Массив с двумя элементами, возвращаемый хуком `useState`, разделяется на две переменные - `answers` и `setAnswers`. `answers` представляет текущее значение состояния, а `setAnswers` - функцию, которую мы будем использовать для обновления значения состояния `answers`.
 	// Таким образом, данная запись создает состояние `answers` и функцию `setAnswers` с начальным значением, представляющим массив пустых строк. Вы можете использовать `answers` для доступа к текущему значению состояния и `setAnswers` для обновления этого значения.
-
-	const [showTextState, setShowTextState] = useState({
-		showResult: false,
-		showText: false,
-	});
+	// const [showTextState, setShowTextState] = useState({
+	// 	showResult: false,
+	// 	showText: false,
+	// });
 
 	// const [showResult, setShowResult] = useState(false);
 
 	const handleAnswerChange = (questionId: number, selectedOption: string) => {
-		setAnswers((prevAnswers) => {
-			const updatedAnswers = [...prevAnswers];
-			updatedAnswers[questionId - 1] = selectedOption;
-			return updatedAnswers;
-		});
+		// redux
+		dispatch(setAnswerAC(questionId, selectedOption));
+
+		// useReducer()
+		// dispatchToQuestions(setAnswerAC(questionId, selectedOption));
+
+		// useState()
+		// setAnswers((prevAnswers) => {
+		// 	const updatedAnswers = [...prevAnswers];
+		// 	updatedAnswers[questionId - 1] = selectedOption;
+		// 	return updatedAnswers;
+		// });
 	};
 	// Разберем эту функцию по шагам:
 	// 1. (questionId: number, selectedOption: string): Это объявление параметров функции. Функция принимает два параметра:
@@ -753,7 +801,7 @@ function App() {
 	// Таким образом, новая версия функции calculateScore выполняет ту же логику, что и предыдущая версия, но с использованием метода reduce для более компактного и выразительного кода.
 	const calculateScore = () => {
 		return questions.reduce((score, question, index) => {
-			if (answers[index] === question.correctAnswer) {
+			if (questionsState.answers[index] === question.correctAnswer) {
 				score += question.points;
 			}
 			return score;
@@ -782,10 +830,17 @@ function App() {
 	//Обратите внимание, что мы также добавили распаковку объекта состояния для получения отдельных переменных showResult и showText. Это позволяет использовать их независимо друг от друга в остальной части вашего кода.
 
 	const onClickResultHandler = () => {
-		setShowTextState(prevState => ({
-			...prevState,
-			showResult: !prevState.showResult,
-		}));
+		// redux
+		dispatch(toggleShowResultAC())
+
+		// useReducer()
+		// dispatchToShowText(toggleShowResultAC())
+
+		// useState()
+		// setShowTextState(prevState => ({
+		// 	...prevState,
+		// 	showResult: !prevState.showResult,
+		// }));
 	};
 	// Функция `onClickResultHandler` обновляет состояние `showResult` в объекте состояния с использованием функциональной формы `setState`. Вот пошаговое объяснение, что происходит внутри этой функции:
 	// 1. `setShowTextState` принимает функцию обратного вызова, которая получает предыдущее состояние в качестве аргумента (`prevState`).
@@ -795,10 +850,18 @@ function App() {
 	// Таким образом, при каждом вызове `onClickResultHandler` происходит обновление состояния `showResult` на противоположное значение. Например, если `showResult` равно `false`, после вызова `onClickResultHandler` оно будет установлено в `true`, и наоборот. Это позволяет переключать состояние `showResult` при каждом клике на кнопку или соответствующее событие.
 
 	const onClickHandler = () => {
-		setShowTextState(prevState => ({
-			...prevState,
-			showText: !prevState.showText,
-		}));
+		// redux
+		dispatch(toggleShowTextAC())
+
+
+		// useReducer()
+		// dispatchToShowText(toggleShowTextAC())
+
+		// useState()
+		// setShowTextState(prevState => ({
+		// 	...prevState,
+		// 	showText: !prevState.showText,
+		// }));
 	};
 
 // Доступ к состояниям
@@ -830,7 +893,7 @@ function App() {
 					<Question
 						key={el.id}
 						question={el}
-						selectedOption={answers[el.id - 1]}
+						selectedOption={questionsState.answers[el.id - 1]}
 						onAnswerChange={handleAnswerChange}
 						showResults={showTextState.showResult}
 					/>
@@ -857,89 +920,7 @@ function App() {
 
 export default App;
 
-// 1. Jak się Pan nazywa?
-//    a) Pan nazywa się Kowalski.
-//    b) Nazywa się Kowalski.
-//    c) Nazywam się Kowalski.
-//		Ответ: c)
-//
-// 2. To jest Anna.
-//    a) Co to jest?
-//    b) Kto to jest?
-//    c) Kto ona jest?
-//		Ответ: b)
-//
-// 3. Piotr i Andrzej ............... z Polski.
-//    a) są
-// 	b) jest
-// 	c) jesteśmy
-//		Ответ: a)
-//
-// 4. Mój ojciec jest ..................... .
-// 	a) dobry dentysta
-// 	b) dobrym dentystą
-// 	c) dobrą dentystką
-//		Ответ: b)
-//
-// 5. Do pracy jadę ..................... .
-// 	a) z autobusem
-// 	b) autobusem
-// 	c) na autobusie
-//		Ответ: b)
-//
-// 6. Nie umiem ......................... na nartach.
-//    a) jeżdżę
-// 	b) jeździć
-// 	c) jechać
-//		Ответ: b)
-//
-// 7. Lubię ...................................... .
-// 	a) mojego komputera
-//	 	b) mój komputer
-// 	c) moim komputerem
-//		Ответ: b)
-//
-// 8. Proszę kawę bez ............................ .
-// 	a) cukier
-//	 	b) cukrem
-// 	c) cukru
-//		Ответ: c)
-//
-// 9. Osiemnaście plus dwieście piętnaście to ....................... .
-// 	a) trzydzieści trzy
-// 	b) dwieście trzydzieści trzy
-//		c) dwieście trzynaście
-//		Ответ: b)
-//
-// 10. Lekcja zaczyna się o ................. (19:20)
-//		a) dziesiątej dwadzieścia.
-//   	b) dziewiątej dwadzieścia. 1
-// 	c) dziewiętnastej dwadzieścia.
-//		Ответ: c)
-//
-// 11. Często jemy w barach mlecznych, ale oni ..................... w restauracji.
-//    a) jem
-// 	b) jemy
-// 	c) jedzą
-//		Ответ: c)
-//
-// 12. Wczoraj (my) .................... dziesięć godzin.
-//   	a) pracowali
-// 	b) pracowaliśmy
-// 	c) pracowały
-//		Ответ: b)
-//
-// 13. Jutro Ania i Piotr ......................... egzamin.
-//    a) będą zdawać
-// 	b) będziecie zdawać
-// 	c) będą zdawały
-//		Ответ: a)
-//
-// 14. Teraz mieszkam w ............................ .
-// 	a) Polsce
-//	 	b) Polska
-//	 	c) Polski
-//		Ответ: a)
+
 
 
 

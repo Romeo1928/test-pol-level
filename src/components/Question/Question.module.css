@@ -1,0 +1,24 @@
+.question {
+	margin-bottom: 50px;
+	max-width: 900px;
+}
+
+.optionsList {
+	list-style-type: none;
+	font-size: 18px;
+}
+
+.green {
+	color: green;
+	font-weight: bold;
+}
+
+.red {
+	color: red;
+	font-weight: bold;
+}
+
+.inherit {
+	color: blue;
+}
+

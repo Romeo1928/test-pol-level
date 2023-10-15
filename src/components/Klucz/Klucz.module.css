@@ -1,0 +1,18 @@
+/*.buttonKlucz {*/
+/*	margin-bottom: 20px;*/
+/*	padding: 20px;*/
+/*	background: darkseagreen;*/
+/*	color: white;*/
+/*	font-size: 20px;*/
+/*	font-weight: bold;*/
+/*	border-radius: 5px;*/
+/*	border: none;*/
+/*	!*outline: none;*!*/
+/*	cursor: pointer;*/
+/*}*/
+
+.kluczList {
+	display: flex;
+	font-size: 20px;
+	list-style-type: none;
+}
